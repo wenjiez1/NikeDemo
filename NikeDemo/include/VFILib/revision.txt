@@ -1,0 +1,27 @@
+/**************************************************************************
+    VFILib.a RELEASE  NOTE
+**************************************************************************/
+LAST VERSION: 01.00.01
+PROGRAMMER  : Wenjie Zeng/Qiuyang Ding
+DATE        : 2017-05-03
+DESCRIPTION :
+1) add vfi_BankSaleResult:withRespMsg:andWithResponse:
+--------------------------------------------------------------------------
+LAST VERSION: 01.00.01
+PROGRAMMER  : Wenjie Zeng/Qiuyang Ding
+DATE        : 2017-03-24
+DESCRIPTION :
+1) remove vfi_resigActive
+2) add -(int)vfi_getBatteryCapEx:
+3) add -(int)vfi_getFirmwareVerEx:
+--------------------------------------------------------------------------
+LAST VERSION: 01.00.00
+PROGRAMMER  : Wenjie Zeng/Qiuyang Ding
+DATE        : 2017-02-10~2017-03-13
+DESCRIPTION :
+1) init version
+--------------------------------------------------------------------------
+
+
+
+
