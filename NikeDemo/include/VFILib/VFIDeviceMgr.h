@@ -169,6 +169,14 @@ enum CARD_CATEGORY{
  */
 -(int)vfi_Bank_Sale:(enum CARD_CATEGORY)category amount:(NSNumber *)amount cashierSysNo:(NSString *)cashierSysNo;
 
+/** invoke the function of E355, to do PosTong sales transaction
+ *
+ *
+ * result on success: VFI_OK
+ *        on failure: VFI_FAIL
+ */
+-(int)vfi_Bank_SaleWithBarcode:(NSString*)barcode amount:(NSNumber *)amount cashierSysNo:(NSString *)cashierSysNo;
+
 /** invoke the function of E355, to do bank card void transaction
  *
  *

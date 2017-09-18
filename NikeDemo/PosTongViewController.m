@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *orgTranDate;
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
 @property (weak, nonatomic) IBOutlet UITextField *orderNo;
+@property (weak, nonatomic) IBOutlet UITextField *barcode;
 
 @end
 
@@ -38,6 +39,7 @@
     _orgTranDate.delegate=self;
     _mtextView.editable=NO;
     _orderNo.delegate=self;
+    _barcode.delegate=self;
 }
 -(void)viewWillAppear:(BOOL)animated{
     deviceMgr.delegate=self;
@@ -55,14 +57,20 @@
     [_orgSysNo resignFirstResponder];
     [_orgRefNo resignFirstResponder];
     [_orderNo resignFirstResponder];
+    [_barcode resignFirstResponder];
     return YES;
 }
 - (IBAction)PosTongLogin:(id)sender {
     [deviceMgr vfi_Bank_Login:TRAN_POSTONG];
 }
+-(void)vfi_BankLoginResult:(char *)respCode withRespMsg:(NSString *)respMsg{
+    NSString *str=[NSString stringWithFormat:@"签到\n retCode:%s,reciept:%@",respCode,respMsg];
+    [_mtextView setText:str];
+}
 - (IBAction)PosTongSale:(id)sender {
     NSNumber *amount=[NSNumber numberWithInteger:[_inputAmount.text integerValue]];
-    [deviceMgr vfi_Bank_Sale:TRAN_POSTONG amount:amount cashierSysNo:_orderNo.text];
+    //[deviceMgr vfi_Bank_Sale:TRAN_POSTONG amount:amount cashierSysNo:_orderNo.text];
+    [deviceMgr vfi_Bank_SaleWithBarcode:_barcode.text amount:amount cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankSaleResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"消费\n retCode:%s,%@,reciept:%@",respCode,respMsg,response.receipt];
