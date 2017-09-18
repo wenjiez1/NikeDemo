@@ -89,7 +89,6 @@
 				FA6A50D61EE938A400E8CE51 /* Info.plist */,
 				FA6A50C21EE938A400E8CE51 /* Supporting Files */,
 			);
-			name = NikeDemo;
 			path = NikeDemo;
 			sourceTree = "<group>";
 		};
@@ -329,7 +328,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NikeDemo",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = test.NikeDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = test1.NikeDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -346,7 +345,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NikeDemo",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = test.NikeDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = test1.NikeDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "VFIBankCardResponse.h"
 #import "VFIBankSettleResponse.h"
+#import "UMSConnectAPI.h"
 
 #define VFI_LIBVER  "01.00.01"
 
@@ -75,12 +76,26 @@ enum CARD_CATEGORY{
  */
 -(void)vfi_BankRefundResult:(char*)respCode withRespMsg:(NSString*)respMsg andWithResponse:(VFIBankCardResponse*)response;
 
+/** Capture the data from the balance query transaction return
+ *
+ *
+ * \return none
+ */
+-(void)vfi_BankBalanceResult:(char*)respCode withRespMsg:(NSString*)respMsg;
+
 /** Capture the data from the settle transaction return
  *
  *
  * \return none
  */
 -(void)vfi_BankSettleResult:(char*)respCode withRespMsg:(NSString*)respMsg andWithResponse:(VFIBankSettleResponse*)response;
+
+/** Capture the data from the reprint transaction return
+ *
+ *
+ * \return none
+ */
+-(void)vfi_BankRePrintResult:(char*)respCode withRespMsg:(NSString*)respMsg andWithResponse:(VFIBankCardResponse*)response;
 
 /** Capture the log data
  *
@@ -89,12 +104,27 @@ enum CARD_CATEGORY{
  */
 -(void)vfi_LogMessage:(NSString*)logMsg;
 
+/** Capture the data from the gift sell card transaction return
+ *
+ *
+ * \return none
+ */
+-(void)vfi_GiftSellCardResult:(char*)respCode withRespMsg:(NSString*)respMsg andWithResponse:(VFIBankCardResponse*)response;
+
+/** Capture the data from the gift void sell card transaction return
+ *
+ *
+ * \return none
+ */
+-(void)vfi_GiftVoidSellCardResult:(char*)respCode withRespMsg:(NSString*)respMsg andWithResponse:(VFIBankCardResponse*)response;
+
 @end
 
 @interface VFIDeviceMgr : NSObject
 
 @property (nonatomic,retain) NSString *bankServerIP;
 @property (nonatomic,assign) int bankServerPort;
+@property (nonatomic,assign) ConnectionMode certificateType;
 @property (nonatomic,retain) NSString *posTongServerIP;
 @property (nonatomic,assign) int posTongServerPort;
 @property (nonatomic,retain) NSString *giftServerIP;
@@ -155,7 +185,6 @@ enum CARD_CATEGORY{
  */
 -(int)vfi_Bank_Refund:(enum CARD_CATEGORY)category amount:(NSNumber*)amount orgTranDate:(NSString*)orgTranDate orgRefNo:(NSString *)orgRefNo cashierSysNo:(NSString *)cashierSysNo;
 
-
 /** invoke the function of E355, to do bank card settle transaction
  *
  *
@@ -163,6 +192,42 @@ enum CARD_CATEGORY{
  *        on failure: VFI_FAIL
  */
 -(int)vfi_Bank_Settle:(enum CARD_CATEGORY)category;
+
+/** invoke the function of E355, to do bank card rePrint transaction
+ *
+ *
+ * result on success: VFI_OK
+ *        on failure: VFI_FAIL
+ */
+-(int)vfi_Bank_RePrint:(enum CARD_CATEGORY)category orgSysNo:(NSString *)systraceNo;
+
+/** invoke the function of E355, to do bank card balance transaction
+ *
+ *
+ * result on success: VFI_OK
+ *        on failure: VFI_FAIL
+ */
+-(int)vfi_Bank_Balance:(enum CARD_CATEGORY)category;
+
+/** invoke the function of E355, to do gift card active transaction
+ *
+ *
+ * result on success: VFI_OK
+ *        on failure: VFI_FAIL
+ */
+-(int)vfi_GiftSellCard:(NSNumber *)amount cashierSysNo:(NSString *)cashierSysNo;
+
+/** invoke the function of E355, to do gift card inactive transaction
+ *
+ *
+ * result on success: VFI_OK
+ *        on failure: VFI_FAIL
+ */
+-(int)vfi_GiftVoidSellCard:(NSNumber *)amount cashierSysNo:(NSString *)cashierSysNo;
+
+#pragma mark - test
+-(bool)vfi_settleBankTranRespData:(NSData *)inData outRescode:(NSData *__autoreleasing *)respCode outRespMsg:(NSString *__autoreleasing *)respMsg outBankTranResp:(VFIBankCardResponse**)bankTranResp;
+-(void)vfi_formBankTranPrnData:(VFIBankCardResponse**)bankCardResponse;
 
 
 @end

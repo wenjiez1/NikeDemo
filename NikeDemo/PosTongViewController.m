@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *orgRefNo;
 @property (weak, nonatomic) IBOutlet UITextField *orgTranDate;
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
+@property (weak, nonatomic) IBOutlet UITextField *orderNo;
 
 @end
 
@@ -29,12 +30,14 @@
     deviceMgr=[VFIDeviceMgr sharedInstance];
     [deviceMgr setPosTongServerIP:@"210.22.91.77"];
     [deviceMgr setPosTongServerPort:5588];
+    [deviceMgr setCertificateType:ConnectionModeNoSSL];
     _logTextView.editable=NO;
     _inputAmount.delegate=self;
     _orgRefNo.delegate=self;
     _orgSysNo.delegate=self;
     _orgTranDate.delegate=self;
     _mtextView.editable=NO;
+    _orderNo.delegate=self;
 }
 -(void)viewWillAppear:(BOOL)animated{
     deviceMgr.delegate=self;
@@ -51,6 +54,7 @@
     [_orgTranDate resignFirstResponder];
     [_orgSysNo resignFirstResponder];
     [_orgRefNo resignFirstResponder];
+    [_orderNo resignFirstResponder];
     return YES;
 }
 - (IBAction)PosTongLogin:(id)sender {
@@ -58,38 +62,23 @@
 }
 - (IBAction)PosTongSale:(id)sender {
     NSNumber *amount=[NSNumber numberWithInteger:[_inputAmount.text integerValue]];
-    NSDate *date=[NSDate new];
-    NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *sysNo=[dateFormatter stringFromDate:date];
-    sysNo=[sysNo stringByAppendingString:@"000000"];
-    [deviceMgr vfi_Bank_Sale:TRAN_POSTONG amount:amount cashierSysNo:sysNo];
+    [deviceMgr vfi_Bank_Sale:TRAN_POSTONG amount:amount cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankSaleResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"消费\n retCode:%s,%@,reciept:%@",respCode,respMsg,response.receipt];
     [_mtextView setText:str];
 }
 - (IBAction)PosTongVoid:(id)sender {
-    NSDate *date=[NSDate new];
-    NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *sysNo=[dateFormatter stringFromDate:date];
-    sysNo=[sysNo stringByAppendingString:@"000000"];
-    [deviceMgr vfi_Bank_Void:TRAN_POSTONG orgSysNo:_orgSysNo.text cashierSysNo:sysNo];
+        [deviceMgr vfi_Bank_Void:TRAN_POSTONG orgSysNo:_orgSysNo.text cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankVoidResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"撤销\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
     [_mtextView setText:str];
 }
 - (IBAction)PosTongRefund:(id)sender {
-    NSDate *date=[NSDate new];
-    NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *sysNo=[dateFormatter stringFromDate:date];
-    sysNo=[sysNo stringByAppendingString:@"000000"];
     
     NSNumber *amount=[NSNumber numberWithInteger:[_inputAmount.text integerValue]];
-    [deviceMgr vfi_Bank_Refund:TRAN_POSTONG amount:amount orgTranDate:_orgTranDate.text orgRefNo:_orgRefNo.text cashierSysNo:sysNo];
+    [deviceMgr vfi_Bank_Refund:TRAN_POSTONG amount:amount orgTranDate:_orgTranDate.text orgRefNo:_orgRefNo.text cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankRefundResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"退货\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
@@ -98,6 +87,10 @@
 
 - (IBAction)PosTongSettle:(id)sender {
     [deviceMgr vfi_Bank_Settle:TRAN_POSTONG];
+}
+-(void)vfi_BankSettleResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankSettleResponse *)response{
+    NSString *str=[NSString stringWithFormat:@"结算\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
+    [_mtextView setText:str];
 }
 -(void)vfi_LogMessage:(NSString *)logMsg{
     static NSString *str=@"";

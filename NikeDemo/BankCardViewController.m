@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *inputAmount;
 @property (weak, nonatomic) IBOutlet UITextField *orgRefNo;
 @property (weak, nonatomic) IBOutlet UITextField *orgTranDate;
+@property (weak, nonatomic) IBOutlet UITextField *orderNo;
 
 @end
 
@@ -30,6 +31,7 @@
     mDeviceMgr=[VFIDeviceMgr sharedInstance];
     [mDeviceMgr setBankServerIP:@"210.22.91.77"];
     [mDeviceMgr setBankServerPort:5201];
+    [mDeviceMgr setCertificateType:ConnectionModeNoSSL];
     [mDeviceMgr setPosTongServerIP:@"210.22.91.77"];
     [mDeviceMgr setPosTongServerPort:5588];
     [mDeviceMgr setGiftServerIP:@"210.22.91.77"];
@@ -41,6 +43,7 @@
     _inputAmount.delegate=self;
     _mTextView.editable=NO;
     _logTextView.editable=NO;
+    _orderNo.delegate=self;
 }
 -(void)viewWillAppear:(BOOL)animated{
     mDeviceMgr.delegate=self;
@@ -64,16 +67,12 @@
     [_orgTranDate resignFirstResponder];
     [_orgRefNo resignFirstResponder];
     [_inputAmount resignFirstResponder];
+    [_orderNo resignFirstResponder];
     return YES;
 }
 - (IBAction)BankSale:(UIButton *)sender {
     NSNumber *amount=[NSNumber numberWithInteger:[_inputAmount.text integerValue]];
-    NSDate *date=[NSDate new];
-    NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *sysNo=[dateFormatter stringFromDate:date];
-    sysNo=[sysNo stringByAppendingString:@"000000"];
-    [mDeviceMgr vfi_Bank_Sale:TRAN_CREDIT amount:amount cashierSysNo:sysNo];
+    [mDeviceMgr vfi_Bank_Sale:TRAN_CREDIT amount:amount cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankSaleResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response
 {
@@ -91,25 +90,16 @@
 }
 
 - (IBAction)Void:(UIButton *)sender {
-    NSDate *date=[NSDate new];
-    NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *sysNo=[dateFormatter stringFromDate:date];
-    sysNo=[sysNo stringByAppendingString:@"000000"];
-    [mDeviceMgr vfi_Bank_Void:TRAN_CREDIT orgSysNo:_orgSysNo.text cashierSysNo:sysNo];
+    [mDeviceMgr vfi_Bank_Void:TRAN_CREDIT orgSysNo:_orgSysNo.text cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankVoidResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"撤销\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
     [_mTextView setText:str];
 }
 - (IBAction)BankRefund:(id)sender {
-    NSDate *date=[NSDate new];
-    NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *sysNo=[dateFormatter stringFromDate:date];
-    sysNo=[sysNo stringByAppendingString:@"000000"];
+    
     NSNumber *amount=[NSNumber numberWithLong:[_inputAmount.text integerValue]];
-    [mDeviceMgr vfi_Bank_Refund:TRAN_CREDIT amount:amount orgTranDate:_orgTranDate.text orgRefNo:_orgRefNo.text cashierSysNo:sysNo];
+    [mDeviceMgr vfi_Bank_Refund:TRAN_CREDIT amount:amount orgTranDate:_orgTranDate.text orgRefNo:_orgRefNo.text cashierSysNo:_orderNo.text];
 }
 -(void)vfi_BankRefundResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"退货\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];

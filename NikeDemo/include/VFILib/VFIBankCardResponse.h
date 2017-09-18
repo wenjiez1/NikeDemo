@@ -48,6 +48,9 @@
 @property (nonatomic, retain) NSString *unPreNo;
 @property (nonatomic, retain) NSString *CVMR;
 @property (nonatomic, assign) char cardType;
+@property (nonatomic, assign) char noSignFlag;
+@property (nonatomic, retain) NSString *cashierNo;
+@property (nonatomic, retain) NSString *merOrderNo;
 
 typedef enum{
     CARD_TYPE_CUP   =   0x31,
@@ -55,7 +58,7 @@ typedef enum{
     CARD_TYPE_MASTER=   0x33,   //Master/Dinner/JCB/other foreign card
     CARD_TYPE_GIFT  =   0x34,
     CARD_TYPE_ALIPAY=   0x35,
-    CARD_TYPE_WECHAT=   0x36
+    CARD_TYPE_WECHAT=   0x36,
 }CARD_TYPE;
 
 @end

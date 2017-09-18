@@ -22,6 +22,8 @@
 #define CMD_SETTLE "52"
 #define CMD_DOWNLOAD_CAPK "53"
 #define CMD_DOWNLOAD_AID  "54"
+#define CMD_REPRINT_66    "66"
+#define CMD_REPRINT_69    "69"
 #define CMD_GET_CARDINFO  "70"
 #define CMD_RESET_DEVICE  "71"
 #define CMD_SET_RSAPUBLICKEY "72"
@@ -29,13 +31,15 @@
 #define CMD_GETBATTERYCAP "C1"
 #define CMD_GETAPPVER "C2"
 #define CMD_GETDEVICEINFO "C3"
+#define CMD_ACTIVE        "C6"
+#define CMD_INACTIVE      "C7"
 
 
 typedef enum{
     MainApp=0x00,
     BankApp=0x01,
     PostApp=0x88,
-    GiftApp=0x03
+    GiftApp=0x20
 }APPTYPE;
 typedef enum
 {
@@ -51,7 +55,7 @@ typedef enum
 
 @interface VFIUtils : NSObject
 
-+(int) VFIUtils_CalcLrc:(unsigned char*)inData withLength:(int)iDataLen;
++(int) VFIUtils_CalcLrc:(unsigned char*)inData withLength:(NSInteger)iDataLen;
 
 +(bool)VFIUtils_Asc2Bcd:(unsigned char*)AscBuf to:(unsigned char*)BcdBuf with:(int)Len;
 
@@ -59,6 +63,14 @@ typedef enum
 
 +(BOOL)VFIUtils_GetID:(unsigned char*)ID;
 
-+(bool)VFIUtils_isValidDataPackage:(unsigned char*)inData withLength:(int)iDataLen;
++(bool)VFIUtils_isValidDataPackage:(unsigned char*)inData withLength:(NSInteger)iDataLen;
 
 @end
+
+@interface StringUtil : NSObject
+
++(NSString*) nsdata2HexStr:(NSData*) data;
++(NSData*) hexStr2NSData:(const NSString*) hexStr;
+
+@end
+
