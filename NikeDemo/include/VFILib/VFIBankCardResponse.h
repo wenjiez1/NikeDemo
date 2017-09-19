@@ -50,6 +50,7 @@
 @property (nonatomic, assign) char cardType;
 @property (nonatomic, assign) char noSignFlag;
 @property (nonatomic, retain) NSString *cashierNo;
+@property (nonatomic, retain) NSString *merchantOrderNo;//Nike商户订单流水号
 
 
 typedef enum{
