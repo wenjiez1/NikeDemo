@@ -50,7 +50,7 @@
 @property (nonatomic, assign) char cardType;
 @property (nonatomic, assign) char noSignFlag;
 @property (nonatomic, retain) NSString *cashierNo;
-@property (nonatomic, retain) NSString *merOrderNo;
+
 
 typedef enum{
     CARD_TYPE_CUP   =   0x31,
