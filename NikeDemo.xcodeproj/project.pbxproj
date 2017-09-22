@@ -16,6 +16,7 @@
 		FA6A50E11EE9393F00E8CE51 /* BankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6A50E01EE9393F00E8CE51 /* BankCardViewController.m */; };
 		FA6A50EA1EE93B1C00E8CE51 /* revision.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA6A50E41EE93B1C00E8CE51 /* revision.txt */; };
 		FA6A50EB1EE93B1C00E8CE51 /* libVFILib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6A50E91EE93B1C00E8CE51 /* libVFILib.a */; };
+		FA7927AE1F752E8C00681D1D /* LOGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7927AD1F752E8C00681D1D /* LOGViewController.m */; };
 		FAD6B8851EF374B300B79C82 /* PosTongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD6B8841EF374B300B79C82 /* PosTongViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,8 @@
 		FA6A50E71EE93B1C00E8CE51 /* VFIDeviceMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VFIDeviceMgr.h; sourceTree = "<group>"; };
 		FA6A50E81EE93B1C00E8CE51 /* VFIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VFIUtils.h; sourceTree = "<group>"; };
 		FA6A50E91EE93B1C00E8CE51 /* libVFILib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVFILib.a; sourceTree = "<group>"; };
+		FA7927AC1F752E8C00681D1D /* LOGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LOGViewController.h; sourceTree = "<group>"; };
+		FA7927AD1F752E8C00681D1D /* LOGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LOGViewController.m; sourceTree = "<group>"; };
 		FAD6B8831EF374B300B79C82 /* PosTongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosTongViewController.h; sourceTree = "<group>"; };
 		FAD6B8841EF374B300B79C82 /* PosTongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosTongViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +86,8 @@
 				FA6A50E01EE9393F00E8CE51 /* BankCardViewController.m */,
 				FAD6B8831EF374B300B79C82 /* PosTongViewController.h */,
 				FAD6B8841EF374B300B79C82 /* PosTongViewController.m */,
+				FA7927AC1F752E8C00681D1D /* LOGViewController.h */,
+				FA7927AD1F752E8C00681D1D /* LOGViewController.m */,
 				FA6A50CE1EE938A400E8CE51 /* Main.storyboard */,
 				FA6A50D11EE938A400E8CE51 /* Assets.xcassets */,
 				FA6A50D31EE938A400E8CE51 /* LaunchScreen.storyboard */,
@@ -199,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA6A50E11EE9393F00E8CE51 /* BankCardViewController.m in Sources */,
+				FA7927AE1F752E8C00681D1D /* LOGViewController.m in Sources */,
 				FA6A50C71EE938A400E8CE51 /* AppDelegate.m in Sources */,
 				FAD6B8851EF374B300B79C82 /* PosTongViewController.m in Sources */,
 				FA6A50C41EE938A400E8CE51 /* main.m in Sources */,

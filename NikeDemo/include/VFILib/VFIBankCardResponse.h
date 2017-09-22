@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum{
+    TRAN_TYPE_NONE,
+    TRAN_TYPE_LOGIN,
+    TRAN_TYPE_SALE,
+    TRAN_TYPE_VOID,
+    TRAN_TYPE_REFUND,
+    TRAN_TYPE_SETTLE
+}TRAN_TYPE;
+
 @interface VFIBankCardResponse : NSObject
 
 @property (nonatomic, retain) NSString *respCode;
@@ -22,6 +31,7 @@
 @property (nonatomic, retain) NSString *cardNo;
 @property (nonatomic, retain) NSString *orgTransType;
 @property (nonatomic, retain) NSString *transType;
+@property (nonatomic, assign) TRAN_TYPE tranType;
 @property (nonatomic, retain) NSString *batchNo;
 @property (nonatomic, retain) NSString *sysTrace;
 @property (nonatomic, retain) NSString *authCode;

@@ -8,6 +8,7 @@
 
 #import "PhaseOneViewController.h"
 #import "VFIDeviceMgr.h"
+#import "LOGViewController.h"
 
 @interface PhaseOneViewController ()<VFIDeviceDelegate>
 {
@@ -19,6 +20,19 @@
 @end
 
 @implementation PhaseOneViewController
+- (IBAction)ShowLog:(id)sender {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSMutableString *libraryPath = [paths[0] mutableCopy];
+    [libraryPath appendString:@"/Caches/Logs/umslogfile.txt"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:libraryPath]) {
+        NSString * text = [[NSString alloc] initWithData:[[NSData alloc] initWithContentsOfFile:libraryPath] encoding:NSUTF8StringEncoding];
+        LOGViewController *co = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LOGViewController"];
+        co.log = text;
+        [self presentViewController:co animated:YES completion:nil];
+    }
+    
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

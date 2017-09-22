@@ -35,7 +35,14 @@ enum CARD_CATEGORY{
     TRAN_POSTONG            =   2,  //Alipay/Wechat
     TRAN_GIFT               =   3,  //Gift Card
 };
-	
+
+typedef NS_ENUM(NSInteger, VFILogLevel) {
+    VFILogLevelOff,
+    VFILogLevelError,
+    VFILogLevelInfo,
+    VFILogLevelTrace,
+    VFILogLevelDebug,
+};
 @protocol VFIDeviceDelegate <NSObject>
 
 @optional
@@ -145,13 +152,16 @@ enum CARD_CATEGORY{
 -(int)vfi_getFirmwareVerEx:(NSString **)respFirmwareVer;
 -(int)vfi_getVFILibVer:(NSString **)respVFILibVer;
 
+//log location-(int)vfi_DeviceConnect;
+
+///app sandbox/Library/Caches/Logs/umslogfile.txt
++(void)setLogLevel:(VFILogLevel)level;
 /** connect device
  *
  *
  * result on success: VFI_OK
  *        on failure: VFI_FAIL
  */
--(int)vfi_DeviceConnect;
 
 /** invoke the function of E355, to do bank card logon transaction
  *
