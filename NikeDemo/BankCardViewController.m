@@ -31,6 +31,10 @@
     mDeviceMgr=[VFIDeviceMgr sharedInstance];
     [mDeviceMgr setBankServerIP:@"210.22.91.77"];
     [mDeviceMgr setBankServerPort:5201];
+//    [mDeviceMgr setBankServerIP:@"210.22.91.77"];
+//    [mDeviceMgr setBankServerPort:4008];
+
+    
     [mDeviceMgr setCertificateType:ConnectionModeNoSSL];
     [mDeviceMgr setPosTongServerIP:@"210.22.91.77"];
     [mDeviceMgr setPosTongServerPort:5588];
@@ -105,7 +109,13 @@
     NSString *str=[NSString stringWithFormat:@"退货\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
     [_mTextView setText:str];
 }
-
+- (IBAction)BankReprint:(id)sender {
+    [mDeviceMgr vfi_Bank_RePrint:TRAN_CREDIT orgSysNo:_orgSysNo.text];
+}
+-(void)vfi_BankRePrintResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
+    NSString *str=[NSString stringWithFormat:@"重打印\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
+    [_mTextView setText:str];
+}
 - (IBAction)Settle:(UIButton *)sender {
     [mDeviceMgr vfi_Bank_Settle:TRAN_CREDIT];
 }

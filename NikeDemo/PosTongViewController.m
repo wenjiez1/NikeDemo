@@ -29,8 +29,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     deviceMgr=[VFIDeviceMgr sharedInstance];
+    
     [deviceMgr setPosTongServerIP:@"210.22.91.77"];
     [deviceMgr setPosTongServerPort:5588];
+    
     [deviceMgr setCertificateType:ConnectionModeNoSSL];
     _logTextView.editable=NO;
     _inputAmount.delegate=self;
@@ -90,6 +92,13 @@
 }
 -(void)vfi_BankRefundResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
     NSString *str=[NSString stringWithFormat:@"退货\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
+    [_mtextView setText:str];
+}
+- (IBAction)PosTongReprint:(id)sender {
+    [deviceMgr vfi_Bank_RePrint:TRAN_POSTONG orgSysNo:_orgSysNo.text];
+}
+-(void)vfi_BankRePrintResult:(char *)respCode withRespMsg:(NSString *)respMsg andWithResponse:(VFIBankCardResponse *)response{
+    NSString *str=[NSString stringWithFormat:@"重打印\nretCode:%s,%@,receipt:%@",respCode,respMsg,response.receipt];
     [_mtextView setText:str];
 }
 
